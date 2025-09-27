@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyPokemonApp</string>
+    <string name="title_pokemons_activity">Pokémons</string>
+    <string name="pokemon_image">Pokemon Image</string>
+    <string name="try_again">Try Again</string>
+    <string name="no_pokemons_found">No pokemons found</string>
+    <string name="back">back</string>
+    <string name="id_pokemon">#%s</string>
+    <string name="height_value">Height: %s</string>
+    <string name="weight_value">Weight: %s</string>
+</resources>

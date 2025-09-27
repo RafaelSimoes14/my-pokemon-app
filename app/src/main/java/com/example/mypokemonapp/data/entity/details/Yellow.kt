@@ -1,0 +1,21 @@
+package com.example.mypokemonapp.data.entity.details
+
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Yellow(
+    @SerializedName("back_default")
+    val backDefault: String? = null,
+    @SerializedName("back_gray")
+    val backGray: String? = null,
+    @SerializedName("back_transparent")
+    val backTransparent: String? = null,
+    @SerializedName("front_default")
+    val frontDefault: String? = null,
+    @SerializedName("front_gray")
+    val frontGray: String? = null,
+    @SerializedName("front_transparent")
+    val frontTransparent: String? = null
+) : Parcelable

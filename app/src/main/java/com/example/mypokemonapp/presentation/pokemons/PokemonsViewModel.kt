@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokemonapp.util.state.Result
 import com.example.mypokemonapp.data.entity.pokemons.Pokemon
-import com.example.mypokemonapp.domain.BusinessUseCase
+import com.example.mypokemonapp.domain.GetPokemonsUseCase
+import com.example.mypokemonapp.util.state.Result
 import kotlinx.coroutines.launch
 
 class PokemonsViewModel(
-    private val useCase: BusinessUseCase
+    private val useCase: GetPokemonsUseCase
 ) : ViewModel() {
 
     private val _loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -29,7 +29,7 @@ class PokemonsViewModel(
     fun loadPokemons() {
         viewModelScope.launch {
             _loading.postValue(true)
-            when (val result = useCase.getPokemon()) {
+            when (val result = useCase.invoke()) {
                 is Result.Error -> {
                     _loading.postValue(false)
                     _pokemons.postValue(listOf())

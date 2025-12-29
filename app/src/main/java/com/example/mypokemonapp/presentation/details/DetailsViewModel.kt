@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokemonapp.util.state.Result
 import com.example.mypokemonapp.data.entity.details.PokemonDetail
-import com.example.mypokemonapp.domain.BusinessUseCase
+import com.example.mypokemonapp.domain.GetPokemonDetailUseCase
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-    private val useCase: BusinessUseCase
+    private val useCase: GetPokemonDetailUseCase
 ) : ViewModel() {
 
     private val _loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -30,7 +30,7 @@ class DetailsViewModel(
         viewModelScope.launch {
             _loading.postValue(true)
 
-            when (val result = useCase.getDetails(id)) {
+            when (val result = useCase.invoke(id)) {
                 is Result.Error -> {
                     _loading.postValue(false)
                     _pokemonDetails.postValue(null)

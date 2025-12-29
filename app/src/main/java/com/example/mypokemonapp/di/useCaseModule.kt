@@ -1,8 +1,10 @@
 package com.example.mypokemonapp.di
 
-import com.example.mypokemonapp.domain.BusinessUseCase
+import com.example.mypokemonapp.domain.GetPokemonDetailUseCase
+import com.example.mypokemonapp.domain.GetPokemonsUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    factory{ BusinessUseCase(get()) }
+    factory { GetPokemonsUseCase(repository = get()) }
+    factory { GetPokemonDetailUseCase(repository = get()) }
 }

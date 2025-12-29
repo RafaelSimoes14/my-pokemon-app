@@ -1,6 +1,6 @@
 package com.example.mypokemonapp.util.state
 
-sealed interface Result<out TYPE> {
-    data class Success<out TYPE>(val data: TYPE) : Result<TYPE>
+sealed interface Result<out T> {
+    data class Success<out T>(val data: T) : Result<T>
     data class Error(val error: Throwable) : Result<Nothing>
 }

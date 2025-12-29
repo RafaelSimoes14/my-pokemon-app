@@ -1,8 +1,14 @@
 package com.example.mypokemonapp.di
 
-import com.example.mypokemonapp.data.repository.MyPokemonRepository
+import com.example.mypokemonapp.data.repository.PokemonRepository
+import com.example.mypokemonapp.data.repository.PokemonRepositoryImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single { MyPokemonRepository(get(), get()) }
+    single<PokemonRepository> {
+        PokemonRepositoryImpl(
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
 }

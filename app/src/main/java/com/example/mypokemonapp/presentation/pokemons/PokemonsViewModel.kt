@@ -13,37 +13,24 @@ class PokemonsViewModel(
     private val useCase: GetPokemonsUseCase
 ) : ViewModel() {
 
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData()
-    fun isLoading(): LiveData<Boolean> = _loading
-
-    private val _error: MutableLiveData<Throwable?> = MutableLiveData()
-    fun hasError(): LiveData<Throwable?> = _error
-
-    fun clearError() {
-        _error.postValue(null)
-    }
-
-    private val _pokemons: MutableLiveData<List<Pokemon>> = MutableLiveData(listOf())
-    fun getPokemons(): LiveData<List<Pokemon>> = _pokemons
+    private val _uiState = MutableLiveData<PokemonUiState>()
+    val uiState: LiveData<PokemonUiState> get() = _uiState
 
     fun loadPokemons() {
+        _uiState.value = PokemonUiState.Loading
         viewModelScope.launch {
-            _loading.postValue(true)
-            when (val result = useCase.invoke()) {
-                is Result.Error -> {
-                    _loading.postValue(false)
-                    _pokemons.postValue(listOf())
-                    _error.postValue(result.error)
-                }
-
+            when (val result = useCase()) {
                 is Result.Success -> {
-                    if (result.data.isEmpty()) {
-                        _loading.postValue(false)
-                        _pokemons.postValue(listOf())
-                        return@launch
-                    }
-                    _loading.postValue(false)
-                    _pokemons.postValue(result.data)
+                    _uiState.value =
+                        if (result.data.isEmpty()) {
+                            PokemonUiState.Empty
+                        } else {
+                            PokemonUiState.Success(result.data)
+                        }
+                }
+                is Result.Error -> {
+                    _uiState.value =
+                        PokemonUiState.Error(result.error)
                 }
             }
         }

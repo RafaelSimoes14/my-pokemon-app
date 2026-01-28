@@ -1,4 +1,4 @@
-package com.example.mypokemonapp.data.repository
+package com.example.mypokemonapp.domain.repository
 
 import com.example.mypokemonapp.data.entity.details.PokemonDetail
 import com.example.mypokemonapp.data.entity.pokemons.Pokemon

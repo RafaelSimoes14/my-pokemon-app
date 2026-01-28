@@ -17,14 +17,13 @@ class PokemonsActivity : AppCompatActivity() {
 
     private lateinit var adapter: PokemonsAdapter
 
-    private val binding by lazy {
-        PokemonsActivityBinding.inflate(layoutInflater)
-    }
+    private lateinit var binding: PokemonsActivityBinding
 
     private val viewModel: PokemonsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = PokemonsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupRecyclerView()
         setupListeners()
@@ -107,8 +106,9 @@ class PokemonsActivity : AppCompatActivity() {
     }
 
     private fun showDetailsPokemon(pokemon: Pokemon?) {
-        val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra("pokemon", pokemon)
+        val intent = Intent(this, DetailsActivity::class.java).apply {
+            putExtra(DetailsActivity.EXTRA_POKEMON_NAME, pokemon?.name)
+        }
         startActivity(intent)
     }
 }

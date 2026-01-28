@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.mypokemonapp.R
-import com.example.mypokemonapp.data.entity.pokemons.Pokemon
 import com.example.mypokemonapp.databinding.DetailsActivityBinding
 import com.example.mypokemonapp.util.extensions.formatPokemonMeasurement
 import com.example.mypokemonapp.util.extensions.gone
@@ -13,9 +12,8 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsActivity : AppCompatActivity() {
-    private val binding by lazy {
-        DetailsActivityBinding.inflate(layoutInflater)
-    }
+
+    private lateinit var binding: DetailsActivityBinding
 
     private val viewModel: DetailsViewModel by viewModel()
 
@@ -23,73 +21,115 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = DetailsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val pokemon: Pokemon? = intent.extras?.getParcelable("pokemon")
+        pokemonName = getPokemonNameOrFinish()
 
-        pokemonName = pokemon?.name.toString()
+        setupListeners()
+        observeUiState()
 
         viewModel.loadPokemonDetails(pokemonName)
+    }
 
-        binding.btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+    private fun getPokemonNameOrFinish(): String {
+        return intent.getStringExtra(EXTRA_POKEMON_NAME)
+            ?: run {
+                finish()
+                return ""
+            }
+    }
+
+    private fun setupListeners() {
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         binding.btnTryAgain.setOnClickListener {
-            binding.btnTryAgain.gone()
             viewModel.loadPokemonDetails(pokemonName)
         }
+    }
 
-        viewModel.isLoading().observe(this) { isLoading ->
-            if (isLoading) {
-                binding.progress.visible()
-                binding.scrollContent.gone()
-
-
-            } else {
-                binding.progress.gone()
-                binding.scrollContent.visible()
+    private fun observeUiState() {
+        viewModel.uiState.observe(this) { state ->
+            when (state) {
+                is DetailsUiState.Loading -> renderLoading()
+                is DetailsUiState.Success -> renderSuccess(state)
+                is DetailsUiState.Error -> renderError(state)
+                is DetailsUiState.Empty -> renderEmpty()
             }
-
         }
+    }
 
-        viewModel.hasError().observe(this) {
-            if (it == null) return@observe
+    private fun renderLoading() = with(binding) {
+        progress.visible()
+        scrollContent.gone()
+        btnTryAgain.gone()
+    }
 
-            binding.btnTryAgain.visible()
-            val snackbar = Snackbar.make(
-                binding.root,
-                it.message!!,
-                Snackbar.LENGTH_SHORT
+    private fun renderError(state: DetailsUiState.Error) = with(binding) {
+        progress.gone()
+        scrollContent.gone()
+        btnTryAgain.visible()
+
+        Snackbar.make(
+            root,
+            state.cause.message ?: getString(R.string.generic_error),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun renderSuccess(state: DetailsUiState.Success) = with(binding) {
+        progress.gone()
+        btnTryAgain.gone()
+        scrollContent.visible()
+
+        val pokemon = state.pokemon
+
+        numberResponse.text =
+            getString(R.string.id_pokemon, pokemon.id.toString())
+
+        pokemonName.text =
+            pokemon.name.replaceFirstChar { it.uppercase() }
+
+        heightResponse.text = getString(
+            R.string.height_value,
+            formatPokemonMeasurement(
+                isHeight = true,
+                value = pokemon.height
             )
-            snackbar.setAction("Ok") { viewModel.clearError() }
-            snackbar.show()
-        }
-        viewModel.getPokemonDetails().observe(this) { detail ->
-            if (detail != null) {
-                binding.numberResponse.text = getString(R.string.id_pokemon, detail.id.toString())
-                binding.pokemonName.text = detail.name.replaceFirstChar { it.uppercase() }
-                binding.heightResponse.text = getString(
-                    R.string.height_value, formatPokemonMeasurement(
-                        isHeight = true,
-                        value = detail.height
-                    )
-                )
-                binding.weightResponse.text = getString(
-                    R.string.weight_value, formatPokemonMeasurement(
-                        value = detail.weight,
-                        isHeight = false
-                    )
-                )
-            }
+        )
 
-            val image = detail?.sprites?.other?.officialArtwork?.frontDefault
-            if (image.isNullOrEmpty()) return@observe
-            if (image != null) {
-                Glide.with(this)
-                    .load(image)
-                    .placeholder(R.drawable.ic_placeholder)
-                    .error(R.drawable.ic_launcher_foreground)
-                    .into(binding.pokemonImage)
-            }
+        weightResponse.text = getString(
+            R.string.weight_value,
+            formatPokemonMeasurement(
+                isHeight = false,
+                value = pokemon.weight
+            )
+        )
+
+        val image = pokemon.sprites
+            .other
+            .officialArtwork
+            ?.frontDefault
+
+        if (!image.isNullOrEmpty()) {
+            Glide.with(this@DetailsActivity)
+                .load(image)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(pokemonImage)
         }
+    }
+
+    private fun renderEmpty() = with(binding) {
+        progress.gone()
+        scrollContent.gone()
+        btnTryAgain.gone()
+    }
+
+    companion object {
+        const val EXTRA_POKEMON_NAME = "extra_pokemon_name"
     }
 }

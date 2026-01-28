@@ -8,4 +8,5 @@
     <string name="id_pokemon">#%s</string>
     <string name="height_value">Height: %s</string>
     <string name="weight_value">Weight: %s</string>
+    <string name="generic_error">Erro genérico</string>
 </resources>

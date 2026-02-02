@@ -1,4 +1,4 @@
-package com.example.mypokemonapp.domain.business
+package com.example.mypokemonapp.domain.usecase
 
 import com.example.mypokemonapp.domain.repository.PokemonRepository
 

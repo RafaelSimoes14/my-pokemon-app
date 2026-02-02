@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokemonapp.domain.business.GetPokemonDetailUseCase
+import com.example.mypokemonapp.domain.usecase.GetPokemonDetailUseCase
 import com.example.mypokemonapp.util.state.Result
 import kotlinx.coroutines.launch
 
@@ -22,7 +22,6 @@ class DetailsViewModel(
                 is Result.Success -> {
                     _uiState.value = DetailsUiState.Success(result.data)
                 }
-
                 is Result.Error -> {
                     _uiState.value = DetailsUiState.Error(result.error)
                 }

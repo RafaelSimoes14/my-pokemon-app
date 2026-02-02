@@ -1,7 +1,7 @@
 package com.example.mypokemonapp.di
 
-import com.example.mypokemonapp.domain.business.GetPokemonDetailUseCase
-import com.example.mypokemonapp.domain.business.GetPokemonsUseCase
+import com.example.mypokemonapp.domain.usecase.GetPokemonDetailUseCase
+import com.example.mypokemonapp.domain.usecase.GetPokemonsUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PokemonDetail(
+data class PokemonDetailResponse(
     val abilities: List<Ability>?,
     @SerializedName("base_experience")
     val baseExperience: Long? = null,

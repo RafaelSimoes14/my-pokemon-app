@@ -3,8 +3,8 @@ package com.example.mypokemonapp.presentation.pokemons
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mypokemonapp.data.entity.pokemons.Pokemon
 import com.example.mypokemonapp.databinding.PokemonsItemBinding
+import com.example.mypokemonapp.domain.model.Pokemon
 
 class PokemonsAdapter(
     private var pokemons: Array<Pokemon>,
@@ -31,7 +31,7 @@ class PokemonsAdapter(
         return pokemons.size
     }
 
-    fun setPokemon(values: List<Pokemon>?){
+    fun setPokemon(values: List<Pokemon>?) {
         this.pokemons = values?.toTypedArray() ?: arrayOf()
         notifyDataSetChanged()
     }

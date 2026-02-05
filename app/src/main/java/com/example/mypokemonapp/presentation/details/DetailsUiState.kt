@@ -1,6 +1,6 @@
 package com.example.mypokemonapp.presentation.details
 
-import com.example.mypokemonapp.data.entity.details.PokemonDetail
+import com.example.mypokemonapp.domain.model.PokemonDetail
 
 sealed interface DetailsUiState {
 

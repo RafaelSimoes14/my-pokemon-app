@@ -1,6 +1,6 @@
 package com.example.mypokemonapp.presentation.pokemons
 
-import com.example.mypokemonapp.data.entity.pokemons.Pokemon
+import com.example.mypokemonapp.domain.model.Pokemon
 
 sealed interface PokemonUiState {
 

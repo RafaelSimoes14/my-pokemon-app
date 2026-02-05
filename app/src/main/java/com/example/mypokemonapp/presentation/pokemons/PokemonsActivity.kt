@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypokemonapp.data.entity.pokemons.Pokemon
 import com.example.mypokemonapp.databinding.PokemonsActivityBinding
+import com.example.mypokemonapp.domain.model.Pokemon
 import com.example.mypokemonapp.presentation.details.DetailsActivity
 import com.example.mypokemonapp.util.extensions.gone
 import com.example.mypokemonapp.util.extensions.visible
@@ -14,11 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PokemonsActivity : AppCompatActivity() {
-
     private lateinit var adapter: PokemonsAdapter
-
     private lateinit var binding: PokemonsActivityBinding
-
     private val viewModel: PokemonsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

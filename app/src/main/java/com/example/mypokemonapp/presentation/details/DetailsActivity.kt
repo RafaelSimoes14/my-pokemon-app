@@ -90,8 +90,7 @@ class DetailsActivity : AppCompatActivity() {
         numberResponse.text =
             getString(R.string.id_pokemon, pokemon.id.toString())
 
-        pokemonName.text =
-            pokemon.name.replaceFirstChar { it.uppercase() }
+        pokemonName.text = pokemon.name
 
         heightResponse.text = getString(
             R.string.height_value,
@@ -109,14 +108,9 @@ class DetailsActivity : AppCompatActivity() {
             )
         )
 
-        val image = pokemon.sprites
-            .other
-            .officialArtwork
-            ?.frontDefault
-
-        if (!image.isNullOrEmpty()) {
+        if (pokemon.imageUrl.isNotEmpty()) {
             Glide.with(this@DetailsActivity)
-                .load(image)
+                .load(pokemon.imageUrl)
                 .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(pokemonImage)

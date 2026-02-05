@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mypokemonapp.domain.result.Result
 import com.example.mypokemonapp.domain.usecase.GetPokemonsUseCase
-import com.example.mypokemonapp.util.state.Result
 import kotlinx.coroutines.launch
 
 class PokemonsViewModel(

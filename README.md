@@ -85,8 +85,8 @@ Quando o usuário acessa a tela de detalhes de um Pokémon:
 ---
 
 ## Possíveis melhorias do projeto
+Com mais tempo, algumas melhorias poderiam ser implementadas:
 
-- Com mais tempo, algumas melhorias poderiam ser implementadas:
 - Adição de testes unitários
 - Implementação de testes de interface (UI tests)
 - Paginação da lista de Pokémons

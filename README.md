@@ -92,7 +92,6 @@ Com mais tempo, algumas melhorias poderiam ser implementadas:
 - Paginação da lista de Pokémons
 - Implementação de busca por nome de Pokémon
 - Melhor tratamento de erros de rede e estados da aplicação
-- Cache local com Room para melhorar performance
 - Migração da interface para Jetpack Compose
 - Implementação de animações e melhorias na experiência do usuário
 

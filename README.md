@@ -68,6 +68,19 @@ Algumas decisões técnicas foram tomadas para manter o projeto organizado e fac
 - Implementação de Repository Pattern para abstração dos dados
 - Utilização de ViewBinding para simplificar o acesso à UI
 - Estrutura preparada para fácil manutenção e escalabilidade
+- Persistência local utilizando Room para armazenamento dos dados dos Pokémons
+
+---
+
+## Estratégia de cache (Room)
+
+Foi implementado um mecanismo de cache local utilizando Room para otimizar o consumo da API e melhorar a performance da aplicação.
+
+Quando o usuário acessa a tela de detalhes de um Pokémon:
+- Os dados são buscados na API apenas se ainda não existirem localmente
+- Após a primeira requisição, os dados são persistidos no banco local
+- Em acessos posteriores ao mesmo Pokémon, os dados são carregados diretamente do Room
+- Isso evita chamadas desnecessárias à API, reduz o tempo de carregamento e melhora a experiência do usuário
 
 ---
 

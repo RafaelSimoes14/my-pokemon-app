@@ -65,9 +65,8 @@ Algumas decisões técnicas foram tomadas para manter o projeto organizado e fac
 - Organização do projeto em camadas inspirada em Clean Architecture
 - Uso do Retrofit para consumo da API
 - Uso de Coroutines para chamadas assíncronas
-- Implementação de Repository Pattern para abstração dos dados
+- Implementação de Repository para abstração dos dados
 - Utilização de ViewBinding para simplificar o acesso à UI
-- Estrutura preparada para fácil manutenção e escalabilidade
 - Persistência local utilizando Room para armazenamento dos dados dos Pokémons
 
 ---

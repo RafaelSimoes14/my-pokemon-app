@@ -2,37 +2,31 @@ package com.example.mypokemonapp.presentation.pokemons
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.example.mypokemonapp.databinding.PokemonsItemBinding
 import com.example.mypokemonapp.domain.model.Pokemon
 
 class PokemonsAdapter(
-    private var pokemons: Array<Pokemon>,
-    private val onclick: (pokemon: Pokemon?) -> Unit
-) : RecyclerView.Adapter<PokemonsViewHolder>() {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): PokemonsViewHolder {
+    private val onclick: (Pokemon) -> Unit
+) : ListAdapter<Pokemon, PokemonsViewHolder>(DIFF_CALLBACK) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonsViewHolder {
         val binding =
             PokemonsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PokemonsViewHolder(binding, onclick)
     }
 
-    override fun onBindViewHolder(
-        holder: PokemonsViewHolder,
-        position: Int
-    ) {
-        val pokemon: Pokemon = pokemons[position]
-        holder.setPokemon(pokemon)
+    override fun onBindViewHolder(holder: PokemonsViewHolder, position: Int) {
+        holder.setPokemon(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return pokemons.size
-    }
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Pokemon>() {
+            override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon) =
+                oldItem.id == newItem.id
 
-    fun setPokemon(values: List<Pokemon>?) {
-        this.pokemons = values?.toTypedArray() ?: arrayOf()
-        notifyDataSetChanged()
+            override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon) = oldItem == newItem
+        }
     }
 }

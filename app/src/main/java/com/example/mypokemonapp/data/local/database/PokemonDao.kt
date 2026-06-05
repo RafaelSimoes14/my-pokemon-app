@@ -20,7 +20,4 @@ interface PokemonDao {
 
     @Update
     suspend fun update(pokemon: PokemonDB)
-
-    @Query("UPDATE Pokemons SET detail = :detailJson WHERE name = :name")
-    suspend fun updateDetailByName(name: String, detailJson: String?)
 }

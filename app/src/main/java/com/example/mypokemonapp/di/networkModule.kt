@@ -1,5 +1,6 @@
 package com.example.mypokemonapp.di
 
+import com.example.mypokemonapp.BuildConfig
 import com.example.mypokemonapp.data.network.PokemonApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,7 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 val networkModule = module {
     single {
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+            else HttpLoggingInterceptor.Level.NONE
         }
     }
     single {

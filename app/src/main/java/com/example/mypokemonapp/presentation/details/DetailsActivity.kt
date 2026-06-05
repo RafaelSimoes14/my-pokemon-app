@@ -25,20 +25,14 @@ class DetailsActivity : AppCompatActivity() {
         binding = DetailsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        pokemonName = getPokemonNameOrFinish()
+        pokemonName = intent.getStringExtra(EXTRA_POKEMON_NAME) ?: run {
+            finish()
+            return
+        }
 
         setupListeners()
         observeUiState()
-
         viewModel.loadPokemonDetails(pokemonName)
-    }
-
-    private fun getPokemonNameOrFinish(): String {
-        return intent.getStringExtra(EXTRA_POKEMON_NAME)
-            ?: run {
-                finish()
-                return ""
-            }
     }
 
     private fun setupListeners() {
@@ -57,7 +51,6 @@ class DetailsActivity : AppCompatActivity() {
                 is DetailsUiState.Loading -> renderLoading()
                 is DetailsUiState.Success -> renderSuccess(state)
                 is DetailsUiState.Error -> renderError(state)
-                is DetailsUiState.Empty -> renderEmpty()
             }
         }
     }
@@ -115,12 +108,6 @@ class DetailsActivity : AppCompatActivity() {
                 .error(R.drawable.ic_launcher_foreground)
                 .into(pokemonImage)
         }
-    }
-
-    private fun renderEmpty() = with(binding) {
-        progress.gone()
-        scrollContent.gone()
-        btnTryAgain.gone()
     }
 
     companion object {

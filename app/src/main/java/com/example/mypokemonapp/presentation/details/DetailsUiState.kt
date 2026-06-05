@@ -10,8 +10,6 @@ sealed interface DetailsUiState {
         val pokemon: PokemonDetail
     ) : DetailsUiState
 
-    object Empty : DetailsUiState
-
     data class Error(
         val cause: Throwable
     ) : DetailsUiState

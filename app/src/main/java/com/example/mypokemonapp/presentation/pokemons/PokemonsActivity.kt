@@ -33,10 +33,7 @@ class PokemonsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PokemonsAdapter(
-            pokemons = arrayOf(),
-            onclick = ::showDetailsPokemon
-        )
+        adapter = PokemonsAdapter(onclick = ::showDetailsPokemon)
 
         binding.recyclerView.apply {
             adapter = this@PokemonsActivity.adapter
@@ -79,7 +76,7 @@ class PokemonsActivity : AppCompatActivity() {
         binding.emptyList.gone()
         binding.btnTryAgain.gone()
 
-        adapter.setPokemon(state.pokemons)
+        adapter.submitList(state.pokemons)
         binding.recyclerView.visible()
     }
 
@@ -102,9 +99,9 @@ class PokemonsActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun showDetailsPokemon(pokemon: Pokemon?) {
+    private fun showDetailsPokemon(pokemon: Pokemon) {
         val intent = Intent(this, DetailsActivity::class.java).apply {
-            putExtra(DetailsActivity.EXTRA_POKEMON_NAME, pokemon?.name)
+            putExtra(DetailsActivity.EXTRA_POKEMON_NAME, pokemon.name)
         }
         startActivity(intent)
     }

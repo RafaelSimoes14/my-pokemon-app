@@ -65,9 +65,8 @@ Algumas decisões técnicas foram tomadas para manter o projeto organizado e fac
 - Organização do projeto em camadas inspirada em Clean Architecture
 - Uso do Retrofit para consumo da API
 - Uso de Coroutines para chamadas assíncronas
-- Implementação de Repository Pattern para abstração dos dados
+- Implementação de Repository para abstração dos dados
 - Utilização de ViewBinding para simplificar o acesso à UI
-- Estrutura preparada para fácil manutenção e escalabilidade
 - Persistência local utilizando Room para armazenamento dos dados dos Pokémons
 
 ---
@@ -85,14 +84,13 @@ Quando o usuário acessa a tela de detalhes de um Pokémon:
 ---
 
 ## Possíveis melhorias do projeto
+Com mais tempo, algumas melhorias poderiam ser implementadas:
 
-- Com mais tempo, algumas melhorias poderiam ser implementadas:
 - Adição de testes unitários
 - Implementação de testes de interface (UI tests)
 - Paginação da lista de Pokémons
 - Implementação de busca por nome de Pokémon
 - Melhor tratamento de erros de rede e estados da aplicação
-- Cache local com Room para melhorar performance
 - Migração da interface para Jetpack Compose
 - Implementação de animações e melhorias na experiência do usuário
 

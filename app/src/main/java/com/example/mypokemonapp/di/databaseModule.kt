@@ -11,7 +11,7 @@ val databaseModule = module {
             get<Application>(),
             AppDatabase::class.java,
             "pokemon_database"
-        ).build()
+        ).fallbackToDestructiveMigration(dropAllTables = true).build()
     }
 
     single { get<AppDatabase>().pokemonDao() }
